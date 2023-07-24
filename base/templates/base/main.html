@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>My Taskpad</title>
+
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha512-KZh1ppAVmfv4/IRXzm6pmKpnlvGUN4tqkpeuc8JUcq/ZCw1dcsQesjTHiD9TlWIpeO2Bz0G8T1a5AdbnGK/vg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link
+      href="https://unpkg.com/css.gg@2.0.0/icons/css/search.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #f9f4f5; /* Light pink background, matches the .header-bar color */
+        font-family: "Nunito", sans-serif;
+        padding-top: 50px;
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Raleway", sans-serif;
+        /* You can also set other styles for headers here, such as color, font-weight, etc. */
+      }
+
+      a,
+      p {
+        color: #4b5156;
+      }
+
+      .container {
+        /* max-width: 550px; */
+        margin: auto;
+        /* background-color: #FFFFFF; /* White background */
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.9
+        ); /* Transparent white background */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 20px; /* Rounded corners */
+        padding: 20px;
+        box-sizing: border-box;
+
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        border-radius: 20px; /* Rounded corners */
+        padding: 22px;
+        box-sizing: border-box;
+        width: 90%;
+        max-width: 550px;
+      }
+      .gg-search {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs, 1));
+        width: 16px;
+        height: 16px;
+        border: 2px solid;
+        border-radius: 100%;
+        margin-left: -4px;
+        margin-top: -4px;
+      }
+
+      .gg-search::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        border-radius: 3px;
+        width: 2px;
+        height: 8px;
+        background: currentColor;
+        transform: rotate(-45deg);
+        top: 10px;
+        left: 12px;
+      }
+
+      .add-task-btn {
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2),
+          -3px -3px 6px rgba(255, 255, 255, 0.5);
+        transition: all 0.2s ease-in-out;
+      }
+
+      .add-task-btn:hover {
+        background-color: #2980b9;
+      }
+
+      .search-field {
+        /* this class is for input field, if in your code its different, just substitute the class name '.search-field' */
+        padding: 10px 15px;
+        min-width: 55%;
+        font-size: 1rem;
+        line-height: 1.5em;
+        color: #373d41;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #c5c5c7;
+        border-radius: 6px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        flex-grow: 1;
+        border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        margin-bottom: 15px;
+      }
+      .search-submit {
+        /* this class is for submit button, if in your code its different, just substitute the class name '.search-submit' */
+        background-color: #f86e6e;
+        color: #ffffff;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: normal;
+        -webkit-transition: none;
+        transition: none;
+        cursor: pointer;
+        outline: 0;
+        padding: 14px 24px 13px;
+        font-size: 1rem;
+        line-height: 1.25rem;
+        border-radius: 6px;
+        border-width: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      .search-form .input-group {
+        text-align: center;
+      }
+      /* ---------------------Task form container */
+      .task-form-container{
+        background-size: 600% 100%;
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            background: linear-gradient(90deg, #f55c47, #e95b89, #ff9b70, #fbc95f);
+            border-radius:0 0 20px 20px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 5px 5px 10px #999, -5px -5px 10px #999;
+            /* width: 400px; */
+            /* display: flex; */
+            /* justify-content: center; */
+            flex-direction: column;
+            /* align-items: center; */
+        }
+
+        .task-form-container form {
+            /* width: 100%; */
+            display: block;
+            flex-direction: column;
+            /* align-items: center; */
+            /* position: relative; */
+            margin: 10px;
+        }
+
+        .task-form-container form input[type="text"] {
+            border: none;
+            background-color: #fbc95f;
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin: 4px ;
+            outline: none;
+            box-shadow: 2px 2px 5px #999, -2px -2px 5px #999;
+        }
+
+
+        .task-form-container form input[type="submit"] {
+            background-color: #ff9b70;
+            color: #fff;
+            border: none;
+            font-weight: 700;
+            border-radius: 10px;
+            font-size: medium;
+            padding: 10px 15px;
+            cursor: pointer;
+            outline: none;
+            margin-top: 10px;
+            box-shadow: 2px 2px 5px #999, -2px -2px 5px #999;
+        }
+
+        .task-form-container form textarea {
+            border: none;
+            background-color: #fbc95f;
+            border-radius: 10px;
+            text-overflow: clip;
+            padding: 10px;
+            margin: 10px;
+            /* text-decoration-color: #f9f4f5; */
+            margin-left: 42px;
+            outline: none;
+            box-shadow: 5px 5px 10px #999, -5px -5px 10px #999;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            /* resize: vertical; */
+            resize:vertical;
+            position: relative;
+            /* max-inline-size: 10px; */
+            
+            box-sizing: border-box; 
+        }
+
+        
+
+        .task-form-container form input[type="submit"]:hover {
+            background-color: #e95b89;
+            font-weight: 700;
+        }
+
+        .task-form-container p {
+            color: #fff;
+            margin-top: 10px;
+            font-weight: 700;
+            font-size: medium;
+        }
+
+
+        .task-form-container form input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+        }
+
+      /* ------------------------task form container end */
+
+
+
+      /* Go back link----------------------------start */
+
+      .go-back-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: #f55c47;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 24px;
+            border-radius: 50%;
+            box-shadow: 5px 5px 10px #e95b89, -5px -5px 10px #ff9b70;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .go-back-link:hover {
+            box-shadow: 2px 2px 5px #e95b89, -2px -2px 5px #ff9b70;
+            transform: translateY(2px);
+        }
+
+    /* Go back link----------------------------end */
+
+      /* -------------------    LOGIN FORM */
+      .login-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px; /* Set a height for the header-bar, adjust as needed */
+        color: #fff;
+        position: relative;
+        padding: 4px;
+        /* background-color: #f0f0f0; */
+        /* Add other styles as needed for the header-bar */
+        background: linear-gradient(90deg, #f55c47, #e95b89, #ff9b70, #fbc95f);
+        background-size: 600% 100%;
+        animation: gradient-animation 10s ease infinite;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 5px 5px 0 0;
+    }
+    .login-bar h1 {
+        padding-top: 12px;
+        font-size: 24px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        margin: 0; /* Remove default margin to align the text properly */
+        margin-bottom: 10px;
+      }
+      .login-form-container {
+            background-size: 600% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(90deg, #f55c47, #e95b89, #ff9b70, #fbc95f);
+            border-radius:0 0 20px 20px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 5px 5px 10px #999, -10px -10px 20px #999;
+            /* width: 400px; */
+            /* display: flex; */
+            /* justify-content: center; */
+            flex-direction: column;
+            /* align-items: center; */
+        }
+
+        .login-form-container h1 {
+            color: #e95b89;
+        }
+
+        .login-form-container form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin: 20px;
+        }
+
+        /* ------------------register div  */
+        #register-div label {
+            width: 90%;
+            display:block;
+            justify-content:space-between;
+            margin: 10px;
+        }
+
+        #register-div input[type="text"],
+        #register-div input[type="password"] {
+            border: none;
+            background-color: #fbc95f;
+            border-radius: 10px;
+            padding: 10px 15px;
+            outline: none;
+            box-shadow: 5px 5px 10px #999, -5px -5px 10px #999;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            width: 50%; /* Adjust the width as needed */
+        }
+
+        #register-div label {
+            color: #fff;
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-left:10px;
+            font-weight: 700;
+            font-size: medium;
+        }
+        
+        /* ----------------register div end */
+        
+
+        .login-form-container form input[type="text"],
+        .login-form-container form input[type="password"] {
+            border: none;
+            background-color: #fbc95f;
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin: 4px ;
+            outline: none;
+            box-shadow: 2px 2px 5px #999, -2px -2px 5px #999;
+        }
+
+
+        .login-form-container form input[type="submit"] {
+            background-color: #ff9b70;
+            color: #fff;
+            border: none;
+            font-weight: 500;
+            border-radius: 10px;
+            font-size: medium;
+            padding: 10px 15px;
+            cursor: pointer;
+            outline: none;
+            margin-top: 10px;
+            box-shadow: 2px 2px 5px #999, -2px -2px 5px #999;
+        }
+
+        
+
+        .login-form-container form input[type="submit"]:hover {
+            background-color: #e95b89;
+            font-weight: 700;
+            
+        }
+
+        .login-form-container p {
+            color: #fff;
+            margin-top: 10px;
+            font-weight: 700;
+            font-size: medium;
+        }
+
+        .login-form-container label {
+            color: #fff;
+            margin-top: 10px;
+            margin-left:10px;
+            font-weight: 700;
+            font-size: medium;
+        }
+
+        .login-form-container p a {
+            color: #685259;
+            margin-left: 3px;
+            /* text-decoration: none; */
+        }
+
+        .login-form-container p a:hover {
+            color: #fff;
+        }
+
+        /* -------------------    LOGIN FORM */
+
+
+
+
+      .header-bar {
+        display: flex;
+        justify-content: space-between;
+        /* align-items: center; */
+        color: #fff;
+        position: relative;
+        padding: 12px;
+        border-radius: 5px 5px 0 0;
+        background: linear-gradient(90deg, #f55c47, #e95b89, #ff9b70, #fbc95f);
+        background-size: 600% 100%;
+        animation: gradient-animation 10s ease infinite;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      @keyframes gradient-animation {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        25% {
+          background-position: 100% 50%;
+        }
+        50% {
+          background-position: 50% 100%;
+        }
+        75% {
+          background-position: 100% 0%;
+        }
+      }
+
+      .header-bar h1 {
+        padding-top: 12px;
+        font-size: 24px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        margin: 0; /* Remove default margin to align the text properly */
+        margin-bottom: 10px;
+      }
+
+      .header-bar h3 {
+        font-size: 18px;
+        margin: 0;
+        margin-top: 5px; /* Add a small margin at the top to separate from h1 */
+        font-style: italic; /* Add italic style to the task count message */
+      }
+
+      .header-bar i {
+        color: #ffc997; /* Change the color of the count number */
+      }
+
+      /* Add a nice text effect for the header text */
+      .header-bar a {
+        color: #fff;
+        font-weight: bold;
+        text-decoration: none;
+        /* transition: color 0.2s ease;  */
+      }
+
+      .task-items-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .add-task-wrapper
+      {
+        /* background: rgba(255, 255, 255, 0.9); */
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        border-radius: 20px;
+        /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); */
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          background-color 0.2s ease;
+        display: flex;
+        justify-content:center;
+        align-items: center;
+      }
+
+      .task-wrapper {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          background-color 0.2s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .task-wrapper:hover {
+        /* Other styles remain the same */
+
+        /* Adjust translateY for enhanced hover animation */
+        transform: translateY(-4px);
+        /* Increase the blur and spread radius for a more prominent box-shadow effect */
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        /* Lighter background color on hover */
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .task-title {
+        font-size: 16px;
+        font-weight: bold;
+        flex: 1; /* Let the task-title take available space */
+      }
+
+      .task-complete-icon a {
+        text-decoration: none;
+        color: #999;
+      }
+
+      .task-incomplete-icon a {
+        text-decoration: none;
+        color: #333;
+      }
+
+      .delete-link {
+        color: #ff6666;
+        text-align: center;
+      }
+
+      .delete-link i {
+        font-size: 18px;
+      }
+
+      /* Additional hover effects for delete link */
+      .delete-link:hover {
+        color: #ff3333;
+      }
+
+      @keyframes shadow-pulse {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        25% {
+          background-position: 100% 50%;
+        }
+        50% {
+          background-position: 50% 100%;
+        }
+        75% {
+          background-position: 100% 0%;
+        }
+      }
+
+      @media only screen and (max-width: 576px) {
+        .header-bar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .header-bar a.logout-link {
+          top: 5px;
+          right: 5px;
+        }
+      }
+
+      /* Add responsive styles */
+      @media only screen and (max-width: 576px) {
+        .container {
+          width: 90%;
+        }
+      }
+
+      @media only screen and (min-width: 576px) and (max-width: 768px) {
+        .container {
+          width: 95%;
+        }
+      }
+
+      @media only screen and (min-width: 768px) and (max-width: 992px) {
+        .container {
+          width: 90%;
+        }
+      }
+
+      @media only screen and (min-width: 992px) and (max-width: 1200px) {
+        .container {
+          width: 80%;
+        }
+      }
+
+      @media only screen and (min-width: 1200px) {
+        .container {
+          width: 70%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">{% block content %} {% endblock content %}</div>
+  </body>
+</html>

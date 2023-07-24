@@ -1,0 +1,34 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    <!-- <h3>Task Form</h3> -->
+    <!-- here we will create a back link and from that we will again to our tasks -->
+    <!-- <a href="{% url 'tasks' %}" class="go-back-link">&#8592;</a> -->
+
+    <!-- as we are adding an item so method will be POST  -->
+    <!-- and we will keep action as blank bcoz we wanna send it to the same url -->
+    <!-- <form action="" method="post"> -->
+        <!-- here we will directly woform e lenge jo django ne hmare liye bna diya hai CreateView ne apne hi model ko use krke and wo form naam se hi access krenge yaha -->
+        <!-- form ko align krne ke liye .as_p kr denge -->
+        <!-- we will also provide csrf token to protect our form from  cross site forgery-->
+        <!-- #{{csrf_token}}this will print the csrf token we need to use % sign instead of double curly braces  -->
+        <!-- {% csrf_token %} -->
+        <!-- {{form.as_p}} -->
+        <!-- <input type="submit" value="Submit"> -->
+    <!-- </form> -->
+    <div class="header-bar">
+        <a href="{% url 'tasks' %}" >&#8592; Go Back</a>
+    </div>
+    <hr>
+    <div class="task-form-container">
+        <!-- <h1>Create a New Form</h1> -->
+            <form  action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit">
+            </form>
+ 
+    </div>
+{% endblock content %}
+    
+    

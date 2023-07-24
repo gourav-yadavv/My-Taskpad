@@ -1,0 +1,22 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+    
+    <!-- here we will create a form as we need to send a post request -->
+    <!-- in javascript we do not need a form jst a delete button can send post request in JS -->
+    <div class="header-bar">
+        <a href="{% url 'tasks' %}" >&#8592; Go Back</a>
+    </div>
+    <hr>
+
+    <div class="login-form-container">
+        <!-- <h1>Create a New Form</h1> -->
+        <form  method="POST">
+            {% csrf_token %}
+            <p>Are you sure you want to delete this task?</p>
+            <input type="submit" value="Delete" />
+        </form>
+    </div>
+    
+
+{% endblock content %}

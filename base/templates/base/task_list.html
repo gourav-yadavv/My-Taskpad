@@ -1,0 +1,131 @@
+{% extends 'base/main.html' %} {% block content %}
+
+<div class="header-bar">
+  <div>
+    <h1>Hello! {{request.user|title}}</h1>
+
+    {% if count %}
+    <h3 style="margin: 0">
+      You have <i>{{count}}</i> incomplete task{{ count|pluralize:"s" }} !
+    </h3>
+    {% endif %}
+  </div>
+  {% if request.user.is_authenticated %}
+  <!-- we can access the logged in user with the request object here-->
+  <!-- <p>{{request.user}}</p> -->
+  <a href="{% url 'logout' %}">Logout</a>
+  {% else %}
+  <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+</div>
+
+<!-- before reaching to the below functionality the user shoulf be authenticated if the user is new / not registered we will redirect the user to the sign up page or if user is registered but not logged in then we will redirect him to the log in page  -->
+<hr />
+<!-- <h1>My Taskpad</h1> -->
+<!-- <h3>Incomplete tasks count : {{count}}</h3> -->
+
+<!-- ye niche wala url hme task create krne wale template pr redirect kr dega -->
+
+<!-- <div id="search-add-wrapper">
+            <form action="" method="GET">
+                <i class="gg-search"></i>
+                <input type="text" name="search-area" value="{{ search_input }}" placeholder="Search Task">
+                <input class="button" type="submit" value="Search">
+            </form>
+            <a href="{% url 'task-create' %}" id="add-link"><i class="fa fa-plus"></i></a>
+    </div> -->
+
+    <div class="add-task-wrapper">
+        <a href="{% url 'task-create' %}" class="add-task-btn"><i class="fa fa-plus">   Add New task</i></a>
+    </div>
+    <form class="search-form">
+        <div class="input-group">
+            <div class="input-group2">
+                <label>
+                <input
+                    type="search"
+                    name = "search-area"
+                    class="search-field"
+                    placeholder="search task..."
+                    value="{{ search_input }}" /></label>
+                <input
+                    type="submit"
+                    class="rstore-domain-search-button search-submit btn btn-primary"
+                    value="Search"
+                />
+            </div>
+        </div>
+    </form>
+    
+    
+
+<!-- <div class="pura-container">
+        <div class="container-for-search-add">
+            <div class="search-container">
+                <form action="" method="GET" class="search-form">
+                    <i class="gg-search"></i>
+                    <input type="text" name="search-area" value="{{ search_input }}" placeholder="Search Task">
+                    <input class="button" type="submit" value="Go">
+                </form>
+            </div>
+        </div>
+        <div class="add-task-container">
+            <a href="{% url 'task-create' %}" class="add-task-btn"><i class="fa fa-plus"></i></a>
+        </div>
+    </div> -->
+
+<div class="task-items-wrapper">
+  {% for task in tasks %}
+  <!-- here we will create div for each item -->
+  <div class="task-wrapper">
+    {% if task.complete %}
+    <div class="task-title">
+      <div class="task-complete-icon">
+        <i class="fas fa-check-circle" style="color: green"></i>
+        <i
+          ><s><a href="{% url 'task-update' task.id %}">{{task}}</a></s></i
+        >
+      </div>
+    </div>
+    {% else %}
+    <div class="task-title">
+      <div class="task-incomplete-icon">
+        <i class="fas fa-circle" style="color: #999"></i>
+        <a href="{% url 'task-update' task.id %}">{{task}}</a>
+      </div>
+    </div>
+    {% endif %}
+    <a class="delete-link" href="{% url 'task-delete' task.id %}"
+      ><i class="fa fa-trash-alt"></i
+    ></a>
+  </div>
+  {% empty %}
+  <h3>No items in the list.</h3>
+  {% endfor %}
+</div>
+
+<!-- <table>
+        <tr>
+            <th>Item</th>
+            <th></th> -->
+<!-- <th></th> -->
+<!-- </tr> -->
+<!-- ye object_list django provide krta hai  -->
+<!-- {#% for task in object_list %} -->
+<!-- ab ye object_list name ki jrurt nahi hai in views.py we set context_object_name = 'tasks' so we can directly say tasks -->
+<!-- {% for task in tasks %} -->
+<!-- <tr> -->
+<!-- <td>{{task.title}}</td> -->
+<!-- here we will provide link for the task detail and we will use django href tag for that -->
+<!-- mtlb yha hmne task_list.html ko ek particular task ki detail ko view krne ke liye redirect kr diya hai view pr click krte hai task.html wali template render ho jayegi -->
+<!-- <td><a href="{% url 'task' task.id %}">View</a></td> -->
+<!-- <td><a href="{% url 'task-update' task.id %}">Edit</a></td> -->
+<!-- ye confirm task delete wale page pr redirect kr degi  -->
+<!-- <td><a href="{% url 'task-delete' task.id %}">Delete</a></td> -->
+<!-- </tr> -->
+<!-- {% empty %} -->
+<!-- <h3>No items in the list.</h3> -->
+<!-- {% endfor %} -->
+<!-- </table> -->
+
+{% endblock content %}
